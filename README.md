@@ -6,6 +6,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   Node v16.10.0 (at least)
   https://nodejs.org/en/download/
 
+## Install all package
+  npm install
+
 ## Get angular CLI
 
 Run npm i @angular/cli
