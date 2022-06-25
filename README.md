@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
 
+## Dependency
+  Node v16.10.0 (at least)
+  https://nodejs.org/en/download/
+
+## Get angular CLI
+
+Run npm i @angular/cli
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
