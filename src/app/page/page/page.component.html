@@ -1,0 +1,191 @@
+
+<div class="container">
+    <div class="row">
+        <div>
+            <div>
+                <h2>User</h2>
+            </div>
+        </div>
+      <div class="row">
+        <table class="table" *ngIf="users">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Flat</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users;index as i">
+              <th scope="row">{{i+1}}</th>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.Flat.name}}</td>
+              <td><button type="button" class="btn btn-sm btn-primary" (click)="onUserEdit(user)">
+                Edit
+               </button></td>
+
+               <td><button type="button" class="btn btn-sm btn-danger" (click)="onRemoveUser(user)">
+                Remove
+               </button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" (click)="openUserModal()">
+              Add User
+             </button>
+          </div>
+          <!-- Button trigger modal -->
+         
+        </div>
+      </div>
+      <div class="row mt-3">
+          <table class="table" *ngIf="flats">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Neigborhood</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let flat of flats;index as i">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{flat.name}}</td>
+                  <td>{{flat.location}}</td>
+                  <td>{{flat.Neighborhood?.name || "Outside Neighborhood"}}</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+      <div class="row">
+          <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" (click)="openFlatModal()">
+              Add Flat
+             </button>
+          </div>
+          <!-- Button trigger modal -->
+
+      </div>
+      </div>
+
+    
+</div>
+
+
+
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Small" [(ngModel)]="userForm.name" aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Small" [(ngModel)]="userForm.email"  aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Flat</label>
+              </div>
+            <select  [(ngModel)]="userForm.flat_id" class="custom-select" id="inputGroupSelect01">
+                <option   [value]="flat.id" *ngFor="let flat of flats">{{flat.name}}</option>
+              </select>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onModalClose()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmitUser()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="flatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Flat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Small" [(ngModel)]="flatForm.name" aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Location</span>
+            </div>
+            <input type="number" class="form-control" aria-label="Small" [(ngModel)]="flatForm.location"  aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onModalFlatClose()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmitFlat()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="confirmationDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="input-group input-group-sm mb-3">
+            <span>Are you sure want to delete <b>{{deleteForm.name}} </b>From User ?</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-block btn-primary" (click)="onConfirmDelete() ">Yes</button>
+          </div>
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-block btn-secondary" (click)="onConfirmationModalClose()">No</button>
+          </div>
+          
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
